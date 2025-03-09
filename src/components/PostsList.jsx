@@ -5,7 +5,7 @@ import NewPost from './NewPost';
 import Modal from './Modal';
 import LoadingSpinner from './LoadingSpinner';
 
-const BACKEND_URL = "https://backend-rivas.vercel.app"; // Updated backend URL
+const BACKEND_URL = "https://backend-rivas-9rq7.vercel.app"; // Updated backend URL
 
 function PostsList({ isPosting, onStopPosting }) {
 	const [posts, setPosts] = useState([]);
