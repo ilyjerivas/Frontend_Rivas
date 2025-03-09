@@ -5,6 +5,8 @@ import NewPost from './NewPost';
 import Modal from './Modal';
 import LoadingSpinner from './LoadingSpinner';
 
+const BACKEND_URL = "https://backend-rivas.vercel.app"; // Updated backend URL
+
 function PostsList({ isPosting, onStopPosting }) {
 	const [posts, setPosts] = useState([]);
 	const [loading, setLoading] = useState(false);
@@ -12,7 +14,7 @@ function PostsList({ isPosting, onStopPosting }) {
 	useEffect(() => {
 		async function fetchPosts() {
 			setLoading(true);
-			const response = await fetch('http://localhost:8080/posts');
+			const response = await fetch(`${BACKEND_URL}/posts`);
 			const resData = await response.json();
 			setPosts(resData.posts);
 			setLoading(false);
@@ -21,20 +23,17 @@ function PostsList({ isPosting, onStopPosting }) {
 		fetchPosts();
 	}, []);
 
-	function addPostHandler(postData) {
-		async function addPost() {
-			setLoading(true);
-			await fetch('http://localhost:8080/posts', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(postData)
-			});
-			setLoading(false);
-		}
+	async function addPostHandler(postData) {
+		setLoading(true);
+		await fetch(`${BACKEND_URL}/posts`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(postData)
+		});
+		setLoading(false);
 
-		addPost();
 		setPosts((existingData) => [postData, ...existingData]);
 	}
 
